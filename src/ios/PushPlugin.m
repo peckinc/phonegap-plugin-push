@@ -241,8 +241,13 @@
         [self setGcmSandbox:@YES];
     }
 
-    if (notificationMessage)			// if there is a pending startup notification
-        [self notificationReceived];	// go ahead and process it
+    // if there is a pending startup notification, go ahead and process it after a delay to let the js warmup
+    if (notificationMessage) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // it works everytime with 0.3 so 1.2 is just majik
+            [self performSelector:@selector(notificationReceived) withObject:nil afterDelay: 1.2];
+        });
+    }
 
     }];
 }

@@ -141,10 +141,12 @@ static char launchNotificationKey;
     }
 
     if (self.launchNotification) {
+
+        // setup this message to get processed in pushHandler.init
         pushHandler.isInline = NO;
         pushHandler.notificationMessage = self.launchNotification;
         self.launchNotification = nil;
-        [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+
     }
 }
 
